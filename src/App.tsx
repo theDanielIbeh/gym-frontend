@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ProtectedPage from './pages/ProtectedPage';
-import ProtectedRoute from './pages/ProtectedRoutes'; // Assuming you have created this component
-import { AuthProvider } from './context/AuthContext'; // Adjust the import path as needed
+import ProtectedRoute from './pages/ProtectedRoutes'; 
+import { AuthProvider } from './context/AuthContext'; 
 
 const App = () => {
   return (
