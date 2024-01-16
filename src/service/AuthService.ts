@@ -14,7 +14,6 @@ const authenticate = async (email: string, password: string): Promise<boolean> =
       return response.data
       
     } catch (error) {
-      console.error(error);
       return false;
     }
   };
