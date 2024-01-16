@@ -6,7 +6,7 @@
 
 @layer base {
     body{
-        @apply bg-gray-100 min-h-full md:min-h-full h-full
+        @apply bg-gray-100
     }
     html{
         @apply h-full
