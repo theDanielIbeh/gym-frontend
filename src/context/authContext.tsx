@@ -1,21 +1,21 @@
-// src/context/AuthContext.tsx
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-const AuthContext = createContext(null);
+interface AuthContextType {
+  isAuthenticated: boolean;
+  login: () => void;
+  logout: () => void;
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+export const AuthContext = createContext<AuthContextType>(null!);
 
-  useEffect(() => {
-    // Initialize user state from local storage or other means
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+export const AuthProvider: React.FC = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = () => setIsAuthenticated(true);
+  const logout = () => setIsAuthenticated(false);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
