@@ -112,7 +112,7 @@ const LoginPage: React.FC = () => {
               </div>
 
               <div className="mt-6">
-                <form action="#" className="space-y-6">
+                <div className="space-y-6">
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                       Email
@@ -179,7 +179,7 @@ const LoginPage: React.FC = () => {
                       Sign in
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>

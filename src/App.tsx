@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import ProtectedPage from './pages/ProtectedPage';
 import ProtectedRoute from './pages/ProtectedRoutes'; 
 import { AuthProvider } from './context/AuthContext'; 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
           <Route path="/protected" element={<ProtectedRoute><ProtectedPage /></ProtectedRoute>} />
         </Routes>
       </Router>
+      <ToastContainer />
     </AuthProvider>
   );
 };
