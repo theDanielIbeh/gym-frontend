@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { AuthService } from '../service/AuthService'; 
+import {toast } from 'react-toastify'
 
 type LocationState = {
     from: {
@@ -27,6 +28,7 @@ const LoginPage: React.FC = () => {
       navigate(from, { replace: true });
     } else {
       setError(error);
+      toast.error(error)
     }
   };
 
