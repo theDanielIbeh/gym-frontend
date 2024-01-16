@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { AuthService } from '../service/AuthService'; // Import the AuthService
+import { AuthService } from '../service/AuthService'; 
+
+// Define the type for location state
+type LocationState = {
+    from: {
+      pathname: string;
+    };
+  };
 
 const LoginPage: React.FC = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as any)?.from?.pathname || "/";
-  
+  const state = location.state as LocationState;
+  const from = state?.from?.pathname || "/";
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
