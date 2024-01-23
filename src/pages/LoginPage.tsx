@@ -1,37 +1,20 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { useAuth } from '../context/useAuth';
-import { AuthService } from '../service/AuthService'; 
-import {toast } from 'react-toastify'
+import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
-type LocationState = {
-    from: {
-      pathname: string;
-    };
-  };
+
 
 const LoginPage: React.FC = () => {
-  const auth = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const state = location.state as LocationState;
-  const from = state?.from?.pathname || "/";
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-  const handleLogin = async () => {
-    const isAuthenticated = await AuthService.authenticate(email, password);
-    if (isAuthenticated) {
-      auth.login();
-      navigate(from, { replace: true });
-    } else {
-      setError(error);
-      toast.error(error)
-    }
+  const { login, isLoading } = useAuth();
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    login(email, password);
   };
-
+  
   return (
     <>
       <div className="flex h-screen">
@@ -112,8 +95,9 @@ const LoginPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="mt-6">
+              <form onSubmit={handleSubmit}>
+            
+              <div className="mt-6" >
                 <div className="space-y-6">
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -175,7 +159,8 @@ const LoginPage: React.FC = () => {
                   <div>
                     <button
                       type="submit"
-                      onClick={handleLogin}
+                      disabled={isLoading}
+
                       className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       Sign in
@@ -183,6 +168,7 @@ const LoginPage: React.FC = () => {
                   </div>
                 </div>
               </div>
+              </form>
             </div>
           </div>
         </div>

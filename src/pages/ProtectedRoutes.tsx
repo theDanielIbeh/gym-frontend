@@ -1,21 +1,20 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import  {useAuth}  from '../context/useAuth';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import Spinner from "react-spinkit"
 
-interface ProtectedRouteProps {
-  children: JSX.Element;
-}
+const ProtectedRoute = () => {
+  const { user, isLoading } = useAuth();
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  const location = useLocation();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  if (isLoading) {
+    return <Spinner
+    name="ball-spin-fade-loader"
+    color="blue"
+    fadeIn="none"
+    className="h-12 w-12 grid align-middle"
+    />
   }
 
-  return children;
+  return user ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
-
-export default ProtectedRoute
+export default ProtectedRoute;
