@@ -1,29 +1,43 @@
-const APP_URL = import.meta.env.VITE_REACT_APP_URL
-import axios from 'axios';
-
-console.log(APP_URL);
-
-const API = axios.create({
-  baseURL: APP_URL,
-});
-
-export type LoginCredentials = {
-  email: string;
-  password: string;
-};
-
-export type LoginResponse = {
-  token: string;
-};
-
-
-export const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
-  const response = await API.post<LoginResponse>('/auth/login', credentials);
-  return response.data;
-};
-
-
-export const fetchCurrentUser = async () => {
-  const response = await API.get('/auth/me');
-  return response.data;
-}
+class AuthService {
+    async login(email: string, password: string): Promise<void> {
+      try {
+        // Replace this with your actual login API call
+        const response = await fetch('http://localhost:3000/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Login Failed');
+        }
+  
+        const data = await response.json();
+        localStorage.setItem('user', data.user)
+        localStorage.setItem('token', data.token);
+        
+      } catch (error) {
+        console.error(error);
+        throw error; 
+      }
+    }
+  
+    logout(): void {
+        // Clear token from local storage
+        localStorage.removeItem('token');
+        
+      }
+    
+      getToken(): string | null {
+        return localStorage.getItem('token');
+      }
+    
+      isAuthenticated(): boolean {
+        return !!this.getToken();
+      }
+  }
+  
+  export const authService = new AuthService();
+  

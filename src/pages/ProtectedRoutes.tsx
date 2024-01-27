@@ -1,20 +1,16 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import Spinner from "react-spinkit"
+import { Navigate } from 'react-router-dom';
+import { authService } from '../services/AuthService';
 
-const ProtectedRoute = () => {
-  const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <Spinner
-    name="ball-spin-fade-loader"
-    color="blue"
-    fadeIn="none"
-    className="h-12 w-12 grid align-middle"
-    />
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  if (!authService.isAuthenticated()) {
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they login, which is a nicer user experience
+    // than dropping them off on the home page.
+    return <Navigate to="/login" />;
   }
 
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+  return children;
 };
 
 export default ProtectedRoute;

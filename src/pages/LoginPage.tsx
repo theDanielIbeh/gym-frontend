@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-
+import { Link, useNavigate  } from 'react-router-dom';
+import { authService } from '../services/AuthService';
+import { toast } from 'react-toastify';
 
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const { login, isLoading } = useAuth();
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    login(email, password);
+  const handleLogin = async () => {
+    try {
+      await authService.login(email, password);
+      navigate('/');
+    } catch (error) {
+      toast.error('Login failed:');
+      // Handle login error (e.g., show error message)
+    }
   };
-  
   return (
     <>
       <div className="flex h-screen">
@@ -95,7 +98,6 @@ const LoginPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <form onSubmit={handleSubmit}>
             
               <div className="mt-6" >
                 <div className="space-y-6">
@@ -159,7 +161,7 @@ const LoginPage: React.FC = () => {
                   <div>
                     <button
                       type="submit"
-                      disabled={isLoading}
+                      onClick={handleLogin}
 
                       className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
@@ -168,7 +170,7 @@ const LoginPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              </form>
+              
             </div>
           </div>
         </div>
