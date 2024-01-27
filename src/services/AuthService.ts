@@ -11,7 +11,7 @@ class AuthService {
         });
   
         if (!response.ok) {
-          throw new Error('Login Failed');
+          throw new Error('Email or Password incorrect');
         }
   
         const data = await response.json();

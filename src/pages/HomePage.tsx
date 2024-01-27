@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
       await authService.logout();
       navigate('/login');
     } catch (error) {
-      toast.error('Logout failed:');
+      toast.error('Error logging out');
     }
   };
   return (

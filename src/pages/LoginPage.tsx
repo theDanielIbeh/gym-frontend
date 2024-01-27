@@ -14,8 +14,7 @@ const LoginPage: React.FC = () => {
       await authService.login(email, password);
       navigate('/');
     } catch (error) {
-      toast.error('Login failed:');
-      // Handle login error (e.g., show error message)
+      toast.error('Email or Password incorrect');
     }
   };
   return (
