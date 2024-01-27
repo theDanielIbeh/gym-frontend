@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import ProtectedRoute from './pages/ProtectedRoutes';
 import HomePage from './pages/HomePage';
+import UsersPage from './pages/UsersPage';
 
 
 const App = () => {
@@ -13,13 +14,9 @@ const App = () => {
              <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
-        />
+          path="/" element={ <ProtectedRoute><HomePage /> </ProtectedRoute>}>
+            <Route path='users' element={<UsersPage />}/>
+          </Route>
       </Routes>
         <ToastContainer />
       </Router>
