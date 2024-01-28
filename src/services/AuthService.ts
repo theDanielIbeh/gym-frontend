@@ -15,8 +15,10 @@ class AuthService {
         }
   
         const data = await response.json();
-        localStorage.setItem('user', data.user)
+        
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user', data.data)
+        console.log(data.data)
         
       } catch (error) {
         console.error(error);
